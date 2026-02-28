@@ -1,0 +1,419 @@
+:root{
+  --bg:#0b0f14;
+  --card:#111a24;
+  --text:#e7eefc;
+  --muted:#97a3b6;
+  --line:#223043;
+  --primary:#4aa3ff;
+  --danger:#ff5a6a;
+  --ok:#44d18e;
+  --warn:#ffcc66;
+  --radius:14px;
+}
+
+*{ box-sizing:border-box; }
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+.container{ width:min(1100px, 92vw); margin:0 auto; }
+.muted{ color:var(--muted); }
+.small{ font-size:12px; }
+
+.topbar{
+  border-bottom:1px solid var(--line);
+  padding:16px 0;
+  background: linear-gradient(180deg, rgba(74,163,255,.10), transparent);
+}
+.brand h1{ margin:0; font-size:22px; }
+.brand p{ margin:6px 0 0; }
+
+.badge{
+  font-size:12px;
+  padding:3px 8px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  color:var(--muted);
+  vertical-align:middle;
+}
+
+.tabs{ margin-top:12px; display:flex; gap:10px; }
+.tab{
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background:#0f1620;
+  color:var(--text);
+  cursor:pointer;
+}
+.tab.active{
+  border-color: rgba(74,163,255,.55);
+  background: rgba(74,163,255,.14);
+}
+
+.grid{ padding:18px 0 26px; }
+.panel{ display:block; }
+.panel.hidden{ display:none; }
+
+.card{
+  background: var(--card);
+  border:1px solid var(--line);
+  border-radius: var(--radius);
+  padding:16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+  margin-bottom:16px;
+}
+.card h2{ margin:0 0 12px; font-size:18px; }
+
+.cardhead{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+  margin-bottom:12px;
+}
+
+.form{ display:flex; flex-direction:column; gap:12px; }
+.row{ display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+@media (max-width: 700px){
+  .row{ grid-template-columns:1fr; }
+}
+
+.field label{ display:block; font-size:12px; color:var(--muted); margin:0 0 6px; }
+.field input, .field textarea, select{
+  width:100%;
+  padding:12px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background:#0f1620;
+  color:var(--text);
+  outline:none;
+}
+.field input:focus, .field textarea:focus, select:focus{
+  border-color: rgba(74,163,255,.7);
+}
+.hint{ display:block; margin-top:6px; font-size:12px; color:var(--muted); }
+
+.btn{
+  padding:12px 12px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background:#0f1620;
+  color:var(--text);
+  cursor:pointer;
+}
+.btn.primary{
+  background: rgba(74,163,255,.18);
+  border-color: rgba(74,163,255,.35);
+}
+
+.list{ display:flex; flex-direction:column; gap:10px; }
+.item{
+  border:1px solid var(--line);
+  border-radius: 14px;
+  padding:12px;
+  background:#0f1620;
+}
+.itemtop{ display:flex; justify-content:space-between; gap:10px; align-items:flex-start; }
+.item h3{ margin:0; font-size:15px; }
+.pills{ display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
+.pill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  color: var(--muted);
+}
+.pill.ok{ border-color: rgba(68,209,142,.35); color: var(--ok); }
+.pill.warn{ border-color: rgba(255,204,102,.35); color: var(--warn); }
+.pill.danger{ border-color: rgba(255,90,106,.35); color: var(--danger); }
+
+.itemactions{ display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
+.itemactions button{ padding:10px 12px; }
+
+.infoBox{
+  border:1px dashed rgba(151,163,182,.35);
+  border-radius: 14px;
+  padding:12px;
+  background: rgba(15,22,32,.6);
+}
+
+.footer{ padding:10px 0 20px; }
+
+/* ================= MODAL ================= */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  background: #0f1c2e;
+  padding: 20px;
+  border-radius: 12px;
+  width: 320px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ===========================
+   MOBILE (Opção A) — 1 coluna, mais clicável
+   Cole este bloco NO FINAL do style.css
+=========================== */
+
+@media (max-width: 720px) {
+  .container { width: min(980px, 94vw); }
+
+  .tabs { flex-wrap: wrap; }
+  .tab { width: 100%; }
+
+  .card { padding: 14px; }
+
+  .row { grid-template-columns: 1fr; }
+
+  .itemtop {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .itemactions {
+    width: 100%;
+    gap: 10px;
+  }
+
+  .itemactions .btn,
+  .itemactions button,
+  .btn {
+    width: 100%;
+    padding: 12px 14px;
+  }
+
+  .field input,
+  .field textarea,
+  select {
+    padding: 12px;
+    font-size: 16px; /* evita zoom do iPhone */
+  }
+
+  .modal-content {
+    width: min(92vw, 420px);
+    max-height: 85vh;
+    overflow: auto;
+  }
+
+  .pills { gap: 6px; }
+  .pill { font-size: 12px; }
+
+  .topbar .brand h1 { font-size: 20px; }
+}
+
+/* ===========================
+   MOBILE B (Premium App Look)
+   Cole no FINAL do style.css
+   =========================== */
+
+:root{
+  --app-radius: 16px;
+  --app-radius-sm: 12px;
+  --app-gap: 12px;
+  --app-gap-lg: 16px;
+  --app-shadow: 0 10px 25px rgba(0,0,0,.08);
+  --app-shadow-soft: 0 6px 18px rgba(0,0,0,.06);
+  --app-border: 1px solid rgba(17,24,39,.10);
+}
+
+/* Melhor toque e legibilidade no geral */
+button, input, select, textarea{
+  font-size: 16px; /* evita zoom automático no iPhone */
+}
+
+.screen{
+  border-radius: var(--app-radius);
+  box-shadow: var(--app-shadow-soft);
+  border: var(--app-border);
+}
+
+@media (max-width: 768px){
+   body{
+    background: #f2f4f8;
+  }
+
+  /* Container mais “app” */
+  .container{
+    max-width: 100%;
+    margin: 12px auto;
+    padding: 12px;
+  }
+
+  /* Topbar compacto e funcional */
+  .topbar{
+    padding: 12px 14px;
+    gap: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+
+  .brand{
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .brand-text{
+    min-width: 0;
+  }
+
+  .brand-text small{
+    opacity: .75;
+  }
+
+  .top-actions{
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .top-actions button{
+    margin-left: 0 !important;
+  }
+
+  /* Telas */
+  .screen{
+    padding: 14px !important;
+    border-radius: var(--app-radius);
+  }
+
+  /* Títulos mais claros */
+  h1, h2, h3{
+    line-height: 1.2;
+  }
+  h2{
+    font-size: 18px;
+  }
+  p, label{
+    line-height: 1.35;
+  }
+
+  /* Formulários confortáveis */
+  input, select, textarea{
+    width: 100%;
+    padding: 12px 12px;
+    border-radius: var(--app-radius-sm);
+    border: 1px solid rgba(17,24,39,.15);
+    outline: none;
+    background: #fff;
+  }
+  textarea{
+    min-height: 96px;
+    resize: vertical;
+  }
+
+  input:focus, select:focus, textarea:focus{
+    border-color: rgba(17,24,39,.35);
+    box-shadow: 0 0 0 4px rgba(17,24,39,.08);
+  }
+
+  /* Botões “app” + touch */
+  button{
+    border-radius: var(--app-radius-sm);
+    padding: 12px 14px;
+    min-height: 44px; /* padrão bom pra toque */
+    box-shadow: 0 8px 18px rgba(0,0,0,.08);
+    transform: translateY(0);
+    transition: transform .08s ease, box-shadow .12s ease, opacity .12s ease;
+  }
+  button:active{
+    transform: translateY(1px);
+    box-shadow: 0 4px 10px rgba(0,0,0,.08);
+  }
+  button[disabled]{
+    opacity: .6;
+    box-shadow: none;
+  }
+
+  /* “Grupos” de botões: vira coluna no mobile */
+  .row, .actions, .btn-row, .buttons, .top-actions{
+    gap: 10px;
+  }
+  .row, .actions, .btn-row, .buttons{
+    display: flex;
+    flex-direction: column;
+  }
+  .row > *, .actions > *, .btn-row > *, .buttons > *{
+    width: 100%;
+  }
+
+  /* Cards mais premium */
+  .card, .pedido-card, .proposta-card, .item-card{
+    border-radius: var(--app-radius);
+    border: var(--app-border);
+    box-shadow: var(--app-shadow);
+    padding: 14px;
+    background: #fff;
+    overflow: hidden;
+  }
+
+  /* Se tiver listas/grids, vira 1 coluna */
+  .grid, .cards, .list, .list-grid{
+    display: grid;
+    grid-template-columns: 1fr !important;
+    gap: 12px;
+  }
+
+  /* Abas / tabs (se existirem) */
+  .tabs, .tabbar, .nav-tabs{
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar, .tabbar::-webkit-scrollbar, .nav-tabs::-webkit-scrollbar{
+    display: none;
+  }
+  .tabs button, .tabbar button, .nav-tabs button{
+    white-space: nowrap;
+    flex: 0 0 auto;
+    box-shadow: none;
+  }
+
+  /* Mensagens / alertas (caso você use classes comuns) */
+  .alert, .msg, .notice, .toast{
+    border-radius: var(--app-radius);
+    padding: 12px 12px;
+    border: var(--app-border);
+    background: rgba(255,255,255,.9);
+  }
+
+  /* Modal mais confortável no mobile */
+  .modal, .modal-content, .dialog{
+    max-width: 92vw !important;
+    border-radius: var(--app-radius);
+  }
+}
+
+/* Ajuste extra para telas bem pequenas */
+@media (max-width: 420px){
+  .container{
+    padding: 10px;
+  }
+  .screen{
+    padding: 12px !important;
+  }
+  button{
+    padding: 12px 12px;
+  }
+}

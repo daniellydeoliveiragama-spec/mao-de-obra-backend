@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>App Mão de Obra V1</title>
+  <link rel="stylesheet" href="./assets/css/style.css" />
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="container">
+      <div class="brand">
+        <h1>App Mão de Obra <span class="badge">V1</span></h1>
+        <p class="muted">Pedido fechado • Propostas privadas • Taxas transparentes • Sem chat</p>
+      </div>
+
+      <nav class="tabs">
+        <button class="tab active" data-tab="cliente">Cliente</button>
+        <button class="tab" data-tab="prestador">Prestador</button>
+      </nav>
+
+      <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn" id="btnLimparDados" type="button">
+          Limpar dados de teste
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container grid">
+
+    <!-- CLIENTE -->
+    <section class="panel" id="tab-cliente">
+      <div class="card">
+        <h2>Criar pedido (fechado)</h2>
+
+        <form id="formPedido" class="form">
+          <div class="row">
+            <div class="field">
+              <label>Nome do cliente</label>
+              <input id="c_nome" required placeholder="Ex.: Danielly" />
+            </div>
+            <div class="field">
+              <label>Telefone (opcional)</label>
+              <input id="c_tel" placeholder="(DDD) 99999-9999" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Título do serviço</label>
+            <input id="p_titulo" required placeholder="Ex.: Instalar chuveiro / Trocar tomada / Pintura" />
+          </div>
+
+          <div class="field">
+            <label>Descrição</label>
+            <textarea id="p_desc" rows="3" placeholder="Detalhe o que precisa, medidas, fotos, etc."></textarea>
+          </div>
+
+          <div class="field">
+            <label>Endereço</label>
+            <input id="p_end" required placeholder="Rua, nº, bairro" />
+          </div>
+
+          <div class="row">
+            <div class="field">
+              <label>Prazo para propostas (horas)</label>
+              <input id="p_prazo" type="number" min="1" step="1" />
+              <span class="hint">Padrão vem do config.js</span>
+            </div>
+
+            <div class="field">
+              <label>&nbsp;</label>
+              <button class="btn primary" type="submit">Criar pedido</button>
+            </div>
+          </div>
+
+          <div class="field" style="margin-top:10px;">
+            <label style="display:flex; align-items:center; gap:8px; font-size:14px;">
+              <input type="checkbox" id="aceitaTermos" required />
+              Li e aceito os
+              <span
+                style="text-decoration:underline; cursor:pointer;"
+                id="abrirTermos"
+              >
+                Termos e Condições
+              </span>.
+            </label>
+          </div>
+        </form>
+      </div>
+
+      <div class="card">
+        <div class="cardhead">
+          <h2>Meus pedidos</h2>
+          <div class="right muted small" id="clienteInfo"></div>
+        </div>
+        <div id="listaPedidosCliente" class="list"></div>
+      </div>
+
+      <div class="card">
+        <h2>Propostas do pedido selecionado</h2>
+        <div id="boxPedidoSelecionado" class="muted small">Selecione um pedido para ver as propostas.</div>
+        <div id="listaPropostasCliente" class="list"></div>
+      </div>
+    </section>
+
+    <!-- PRESTADOR -->
+    <section class="panel hidden" id="tab-prestador">
+
+      <div class="card">
+        <h2>Enviar proposta</h2>
+
+        <form id="formProposta" class="form">
+          <div class="row">
+            <div class="field">
+              <label>Seu nome completo</label>
+              <input id="pr_nome" required placeholder="Ex.: João Pedro da Silva" />
+            </div>
+
+            <div class="field">
+              <label>Telefone (opcional)</label>
+              <input id="pr_tel" placeholder="(DDD) 99999-9999" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field">
+              <label>Pedido (selecionar)</label>
+              <select id="pr_pedidoSelect" required></select>
+              <span class="hint">Aparecem apenas pedidos ABERTOS e dentro do prazo.</span>
+            </div>
+            <div class="field">
+              <label>Valor proposto (R$)</label>
+              <input id="pr_valor" type="number" min="0" step="0.01" required placeholder="0,00" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Observação (opcional)</label>
+            <textarea id="pr_obs" rows="3" placeholder="Prazo de execução, material incluso, detalhes..."></textarea>
+          </div>
+
+          <div class="infoBox" id="boxTaxasPrestador">
+            <div class="muted small">Selecione um pedido e digite um valor para ver as taxas.</div>
+          </div>
+
+          <button class="btn primary" type="submit">Enviar proposta (privada)</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <h2>Pedidos abertos</h2>
+        <div id="listaPedidosPrestador" class="list"></div>
+      </div>
+
+      <div class="card">
+        <h2>Minhas propostas</h2>
+
+        <div class="muted small" style="margin-bottom:10px;">
+          Mostra suas propostas (filtradas pelo seu nome e telefone) e permite editar enquanto o pedido estiver ABERTO e dentro do prazo.
+        </div>
+
+        <div style="margin:12px 0; display:grid; gap:10px;">
+          <input
+            type="text"
+            id="filtroPrestadorNome"
+            placeholder="Digite seu NOME COMPLETO exatamente como enviou na proposta..."
+            style="width:100%; padding:10px; border-radius:8px;"
+            required
+          />
+
+          <input
+            type="text"
+            id="filtroPrestadorTel"
+            placeholder="Digite seu TELEFONE (opcional) — ajuda a achar só as suas propostas"
+            style="width:100%; padding:10px; border-radius:8px;"
+          />
+        </div>
+
+        <div id="listaMinhasPropostas" class="list">
+          Digite seu nome para ver suas propostas.
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <footer class="footer container">
+    <span class="muted small" id="rodapeVersao"></span>
+  </footer>
+
+  <!-- Modal Editar Proposta -->
+  <div id="modalEditarProposta" class="modal hidden">
+    <div class="modal-content">
+      <h3>Editar proposta</h3>
+
+      <input
+        type="number"
+        id="modalNovoValor"
+        placeholder="Novo valor (apenas número)"
+        min="0"
+        step="0.01"
+      />
+
+      <div class="modal-actions">
+        <button id="btnSalvarEdicao" class="btn primary" type="button">Salvar</button>
+        <button id="btnCancelarEdicao" class="btn" type="button">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Termos e Condições -->
+  <div id="modalTermos" class="modal hidden">
+    <div class="modal-content">
+      <h3>Termos e Condições</h3>
+
+      <div style="max-height: 320px; overflow:auto; padding:10px; border:1px solid rgba(255,255,255,.15); border-radius:10px;">
+        <p class="muted small">
+          <b>1) Papel da plataforma:</b> conectamos cliente e prestador. A execução do serviço é responsabilidade do prestador.<br><br>
+          <b>2) Propostas privadas:</b> o cliente escolhe 1 proposta. Ao aceitar, o pedido é fechado e as demais propostas são canceladas.<br><br>
+          <b>3) Pagamentos:</b> o pagamento do serviço é combinado entre cliente e prestador (fora do app).<br><br>
+          <b>4) Taxas:</b> taxas podem existir conforme política vigente e serão informadas nos Termos quando aplicável.<br><br>
+          <b>5) Segurança:</b> não nos responsabilizamos por acordos feitos fora do aplicativo. Recomendamos confirmar dados do prestador antes de contratar.
+        </p>
+      </div>
+
+           <div class="modal-actions">
+        <button id="btnFecharTermos" class="btn primary" type="button">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="./assets/js/config.js"></script>
+  <script src="./assets/js/storage.js"></script>
+  <script src="./assets/js/app.js"></script>
+
+    </div>
+  </div>
+
+</body>
+</html>
